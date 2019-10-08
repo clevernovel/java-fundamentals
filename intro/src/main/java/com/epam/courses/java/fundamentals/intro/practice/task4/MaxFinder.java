@@ -12,10 +12,12 @@ public class MaxFinder {
     this.as = as;
   }
 
+  public static double getMaximum(double[] as) { return  new MaxFinder(as).getMaximum();}
+
   public double getMaximum() {
 
     double max = 0;
-   for (int i = 1; i <= as.length; i++) {
+   for (int i = 1; i < as.length; i++) {
      double temp = as[i]+as[i-1];
      out.println(temp);
      if (max < temp) {
@@ -23,5 +25,14 @@ public class MaxFinder {
      }
    }
     return max;
+  }
+
+  public static void main(String... __) {
+    int n = (int)Math.round(Math.random()*20);
+    double[] as = new double [n];
+    for (int i = 0; i < as.length; i++) {
+      as[i] = Math.random()*10;
+    }
+    out.println("Максимальное значение " + getMaximum(as));
   }
 }
