@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.epam.courses.java.fundamentals</groupId>
+  <artifactId>java-fundamentals</artifactId>
+  <version>${revision}</version>
+
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>intro</module>
+    <module>oop</module>
+  </modules>
+
+  <developers>
+    <developer>
+      <name>Vyacheslav Lapin</name>
+      <url>http://vlapin.ru</url>
+    </developer>
+  </developers>
+
+  <properties>
+
+    <!--region General-->
+    <java.version>13</java.version>
+    <revision>0.0.1-SNAPSHOT</revision>
+    <minimal.maven.version>3.6.1</minimal.maven.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <!--endregion-->
+
+    <!--region BOMs -->
+    <spring-boot.version>2.1.8.RELEASE</spring-boot.version>
+    <!--endregion-->
+
+    <!--region Libs -->
+    <lombok.version>1.18.10</lombok.version>
+    <manifold-version>2019.1.14</manifold-version>
+    <vavr.version>1.0.0-alpha-3</vavr.version>
+
+    <checker.version>2.11.0</checker.version>
+    <annotations.version>17.0.0</annotations.version>
+    <jcip-annotations.version>1.0</jcip-annotations.version>
+    <spotbugs.version>4.0.0-beta4</spotbugs.version>
+    <error_prone_annotations.version>2.3.3</error_prone_annotations.version>
+
+    <junit-jupiter.version>5.3.2</junit-jupiter.version>
+    <!--endregion-->
+
+    <!--region Plugins-->
+    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+    <maven.compiler.release>${java.version}</maven.compiler.release>
+    <maven.compiler.parameters>true</maven.compiler.parameters>
+    <maven.compiler.forceJavacCompilerUse>true</maven.compiler.forceJavacCompilerUse>
+    <maven.compiler.failOnError>false</maven.compiler.failOnError>
+
+    <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
+    <!--<maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>-->
+    <!--<argLine>&#45;&#45;enable-preview -Xplugin:Manifold</argLine>-->
+    <argLine>--enable-preview</argLine>
+
+    <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
+    <maven-assembly-plugin.descriptorRef>jar-with-dependencies</maven-assembly-plugin.descriptorRef>
+    <maven-assembly-plugin.mainClass>ru.vlapin.courses.java.fundamentals.intro.Hello</maven-assembly-plugin.mainClass>
+    <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
+    <assembly.skipAssembly>true</assembly.skipAssembly>
+
+    <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
+
+    <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
+    <checkstyle.version>8.20</checkstyle.version>
+    <spotbugs-maven-plugin.version>3.1.11</spotbugs-maven-plugin.version>
+    <maven-pmd-plugin.version>3.12.0</maven-pmd-plugin.version>
+    <sonar-maven-plugin.version>2.7.1</sonar-maven-plugin.version>
+    <jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
+
+    <lombok-maven-plugin.version>1.18.8.1</lombok-maven-plugin.version>
+    <lombok.verbose>true</lombok.verbose>
+    <lombok.addOutputDirectory>false</lombok.addOutputDirectory>
+    <lombok.sourceDirectory>${project.basedir}/src/main/java</lombok.sourceDirectory>
+    <lombok.testSourceDirectory>${project.basedir}/src/test/java</lombok.testSourceDirectory>
+    <!--endregion-->
+
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
+        <scope>provided</scope>
+        <optional>true</optional>
+      </dependency>
+      <!--region systems.manifold:manifold-all:${manifold-version}-->
+      <!--<dependency>-->
+      <!--  <groupId>systems.manifold</groupId>-->
+      <!--  <artifactId>manifold-all</artifactId>-->
+      <!--  <version>${manifold-version}</version>-->
+      <!-- </dependency>-->
+      <!--endregion </dependency>-->
+      <dependency>
+        <groupId>io.vavr</groupId>
+        <artifactId>vavr</artifactId>
+        <version>${vavr.version}</version>
+      </dependency>
+
+      <!--region Common Annotations (CheckerFramework, JetBrains, SpotBugs, ErrorProne) -->
+      <dependency>
+        <groupId>org.checkerframework</groupId>
+        <artifactId>checker</artifactId>
+        <version>${checker.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jetbrains</groupId>
+        <artifactId>annotations</artifactId>
+        <version>${annotations.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>net.jcip</groupId>
+        <artifactId>jcip-annotations</artifactId>
+        <version>${jcip-annotations.version}</version>
+        <optional>true</optional>
+      </dependency>
+      <dependency>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-annotations</artifactId>
+        <version>${spotbugs.version}</version>
+        <optional>true</optional>
+      </dependency>
+      <dependency>
+        <groupId>com.google.errorprone</groupId>
+        <artifactId>error_prone_annotations</artifactId>
+        <version>${error_prone_annotations.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <!--endregion-->
+
+      <!--region Test (JUnit-Jupiter)-->
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-params</artifactId>
+        <version>${junit-jupiter.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>${junit-jupiter.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <!--endregion-->
+
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+    <!--region systems.manifold:manifold-all -->
+    <!--<dependency> -->
+    <!--  <groupId>systems.manifold</groupId>-->
+    <!--  <artifactId>manifold-all</artifactId>-->
+    <!--</dependency>-->
+    <!--endregion </dependency>-->
+    <dependency>
+      <groupId>io.vavr</groupId>
+      <artifactId>vavr</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+    </dependency>
+
+    <!--region Common Annotations (CheckerFramework, JetBrains, SpotBugs, ErrorProne) -->
+    <dependency>
+      <groupId>org.checkerframework</groupId>
+      <artifactId>checker</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains</groupId>
+      <artifactId>annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>net.jcip</groupId>
+      <artifactId>jcip-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.github.spotbugs</groupId>
+      <artifactId>spotbugs-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.errorprone</groupId>
+      <artifactId>error_prone_annotations</artifactId>
+    </dependency>
+    <!--endregion-->
+
+    <!--region Test (JUnit-Jupiter, AssertJ, Mockito -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+    </dependency>
+    <!--endregion-->
+
+  </dependencies>
+
+  <build>
+
+    <defaultGoal>verify</defaultGoal>
+
+    <pluginManagement>
+      <plugins>
+
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
+          <configuration>
+            <compilerArgs>
+              <arg>--enable-preview</arg>
+              <arg>-Xlint:preview</arg>
+              <!--<arg>-Xplugin:Manifold</arg>-->
+            </compilerArgs>
+            <annotationProcessorPaths>
+              <!--<processorPath>-->
+              <!--  <groupId>systems.manifold</groupId>-->
+              <!--  <artifactId>manifold-all</artifactId>-->
+              <!--  <version>${manifold-version}</version>-->
+              <!--</processorPath>-->
+              <processorPath>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+              </processorPath>
+            </annotationProcessorPaths>
+            <annotationProcessors>
+              <annotationProcessor>lombok.launch.AnnotationProcessorHider$AnnotationProcessor</annotationProcessor>
+            </annotationProcessors>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${maven-surefire-plugin.version}</version>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>${maven-assembly-plugin.version}</version>
+          <configuration>
+            <archive>
+              <manifest>
+                <mainClass>${maven-assembly-plugin.mainClass}</mainClass>
+              </manifest>
+            </archive>
+            <descriptorRefs>
+              <descriptorRef>${maven-assembly-plugin.descriptorRef}</descriptorRef>
+            </descriptorRefs>
+          </configuration>
+          <executions>
+            <execution>
+              <id>make-assembly</id>
+              <phase>package</phase>
+              <goals>
+                <goal>single</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>${maven-enforcer-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>enforce-maven</id>
+              <goals>
+                <goal>enforce</goal>
+              </goals>
+              <configuration>
+                <rules>
+                  <requireMavenVersion>
+                    <version>${minimal.maven.version}</version>
+                  </requireMavenVersion>
+                </rules>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>${versions-maven-plugin.version}</version>
+          <configuration>
+            <generateBackupPoms>false</generateBackupPoms>
+            <rulesUri>file://${user.dir}/ruleset.xml</rulesUri>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>${maven-checkstyle-plugin.version}</version>
+          <configuration>
+            <configLocation>google_checks.xml</configLocation>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+          <dependencies>
+            <dependency>
+              <groupId>com.puppycrawl.tools</groupId>
+              <artifactId>checkstyle</artifactId>
+              <version>${checkstyle.version}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>${sonar-maven-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>${jacoco-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>jacoco-initialize</id>
+              <goals>
+                <goal>prepare-agent</goal>
+              </goals>
+              <configuration>
+                <!-- Property containing settings for JaCoCo runtime agent -->
+                <propertyName>surefireArgLine</propertyName>
+              </configuration>
+            </execution>
+            <!-- Ensures unit test coverage report is created after running tests -->
+            <execution>
+              <id>post-unit-test</id>
+              <phase>test</phase>
+              <goals>
+                <goal>report</goal>
+              </goals>
+            </execution>
+            <!-- Property for JaCoCo runtime agent, passed to Failsafe plugin -->
+            <execution>
+              <id>pre-integration-test</id>
+              <phase>pre-integration-test</phase>
+              <goals>
+                <goal>prepare-agent</goal>
+              </goals>
+              <configuration>
+                <propertyName>failsafeArgLine</propertyName>
+              </configuration>
+            </execution>
+            <execution>
+              <id>post-integration-test</id>
+              <phase>post-integration-test</phase>
+              <goals>
+                <goal>report</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!--region SpotBugs. Actually, JDK13 enable-preview is not supported :( -->
+        <!--<plugin>-->
+        <!--  <groupId>com.github.spotbugs</groupId>-->
+        <!--  <artifactId>spotbugs-maven-plugin</artifactId>-->
+        <!--  <version>${spotbugs-maven-plugin.version}</version>-->
+        <!--  <configuration>&lt;!&ndash;https://spotbugs.github.io/spotbugs-maven-plugin/usage.html&ndash;&gt;-->
+        <!--    <effort>Max</effort>-->
+        <!--    <threshold>Low</threshold>-->
+        <!--    <xmlOutput>true</xmlOutput>-->
+        <!--  </configuration>-->
+        <!--  <executions>-->
+        <!--    <execution>-->
+        <!--      <goals>-->
+        <!--        <goal>check</goal>-->
+        <!--      </goals>-->
+        <!--    </execution>-->
+        <!--  </executions>-->
+        <!--  <dependencies>-->
+        <!--    <dependency>-->
+        <!--      <groupId>com.github.spotbugs</groupId>-->
+        <!--      <artifactId>spotbugs</artifactId>-->
+        <!--      <version>${spotbugs.version}</version>-->
+        <!--    </dependency>-->
+        <!--  </dependencies>-->
+        <!--</plugin>-->
+        <!--endregion-->
+
+        <!--region PMD. Actually, JDK13 enable-preview bytecode is not supported :( -->
+        <!--<plugin>-->
+        <!--  <artifactId>maven-pmd-plugin</artifactId>-->
+        <!--  <version>${maven-pmd-plugin.version}</version>-->
+        <!--  <configuration>-->
+        <!--    <printFailingErrors>true</printFailingErrors>-->
+        <!--  </configuration>-->
+        <!--  <executions>-->
+        <!--    <execution>-->
+        <!--      <goals>-->
+        <!--        <goal>check</goal>-->
+        <!--      </goals>-->
+        <!--    </execution>-->
+        <!--  </executions>-->
+        <!--</plugin>-->
+        <!--endregion-->
+
+        <plugin>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok-maven-plugin</artifactId>
+          <version>${lombok-maven-plugin.version}</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </dependency>
+          </dependencies>
+          <executions>
+            <execution>
+              <id>delombok</id>
+              <!-- <phase>generate-sources</phase> -->
+              <goals>
+                <goal>delombok</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>test-delombok</id>
+              <!-- <phase>generate-test-sources</phase> -->
+              <goals>
+                <goal>testDelombok</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-enforcer-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>sonar-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>12</source>
+          <target>12</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>12</source>
+          <target>12</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>12</source>
+          <target>12</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>12</source>
+          <target>12</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>12</source>
+          <target>12</target>
+        </configuration>
+      </plugin>
+
+      <!--region SpotBugs. Actually, JDK13 enable-preview is not supported :( -->
+      <!--<plugin>-->
+      <!--  <groupId>com.github.spotbugs</groupId>-->
+      <!--  <artifactId>spotbugs-maven-plugin</artifactId>-->
+      <!--</plugin>-->
+      <!--endregion-->
+
+      <!--region PMD. Actually, JDK13 enable-preview bytecode is not supported :( -->
+      <!--<plugin>-->
+      <!--  <artifactId>maven-pmd-plugin</artifactId>-->
+      <!--</plugin>-->
+      <!--endregion-->
+
+    </plugins>
+
+  </build>
+</project>
